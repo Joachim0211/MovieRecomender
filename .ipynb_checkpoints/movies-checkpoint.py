@@ -3,7 +3,10 @@ import pandas as pd
 import matplotlib as plt
 import seaborn as sns
 from sklearn.metrics.pairwise import cosine_similarity
-
+dflinks = pd.read_csv('links.csv')
+dfmovies = pd.read_csv('movies.csv')
+dfratings = pd.read_csv('ratings.csv')
+dftags = pd.read_csv('tags.csv')
 
 st.title("Movie Recommendation")
  
