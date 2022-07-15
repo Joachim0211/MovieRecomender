@@ -12,10 +12,13 @@ This is a protptype where users can see the top rated movies and movies that we 
  
 """)
 
-if st.button('Go to Model Evaluation', on_click="https://www.google.de/?hl=de"):
-     st.write('Why hello there')
+link = '[Google](https://www.google.de/?hl=de)'
+
+
+if st.button('Go to Model Evaluation'):
+     st.markdown(link, unsafe_allow_html=True)
 else:
-     st.write('Goodbye')
+     st.write('No such Website')
 
 movies = pd.read_csv('movies.csv')
 ratings = pd.read_csv('ratings.csv')
