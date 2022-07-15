@@ -3,10 +3,7 @@ import pandas as pd
 import matplotlib as plt
 import seaborn as sns
 from sklearn.metrics.pairwise import cosine_similarity
-dflinks = pd.read_csv('links.csv')
-dfmovies = pd.read_csv('movies.csv')
-dfratings = pd.read_csv('ratings.csv')
-dftags = pd.read_csv('tags.csv')
+
 
 st.title("Movie Recommendation")
  
@@ -78,21 +75,3 @@ def sim_movies(name, n):
 st.write('Movies you might like')
 sim_movies(name1, int(n1))
 
-n3 = st.text_input('Whats hot at the moment - put in a number')
-if n3=="":
-    n3="1"
-def recom_movies(n):
-    rating = pd.DataFrame(dfratings.groupby('movieId')['rating'].mean())
-    rating['movieId'] = rating.index
-    rating['rating_count'] = dfratings.groupby('movieId')['rating'].count()
-    rating['hrating'] = rating['rating'] * (rating['rating_count']/100)
-    rated = rating.sort_values(by='hrating', ascending=False)
-    for i in range(n):
-        temp = rated.iloc[i]['movieId']
-        print(temp)
-        dfmovies.loc[dfmovies['movieId'] == temp, 'title']
-        top_movie_list.append(dfmovies.loc[dfmovies['movieId'] == temp, 'title'].item()) 
-        # top_movie_list.append(b['movieId'].temp)
-    return top_movie_list
-
-recom_movies(n3)
