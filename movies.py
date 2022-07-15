@@ -75,7 +75,6 @@ def sim_movies(name, n):
 st.write('Movies you might like')
 sim_movies(name1, int(n1))
 
-
 n3 = st.text_input('Whats hot at the moment - put in a number')
 if n3=="":
     n3="1"
@@ -89,10 +88,8 @@ def recom_movies(n):
         temp = rated.iloc[i]['movieId']
         print(temp)
         dfmovies.loc[dfmovies['movieId'] == temp, 'title']
-        # temp1 = rating.loc[rating['movieId'] == temp, 'rating_count']>3.5
-        # print(temp1)
-        #top_movie_list.append(dfmovies.loc[dfmovies['movieId'] == temp, 'title'].item()) 
-        top_movie_list.append(b['movieId'].temp)
+        top_movie_list.append(dfmovies.loc[dfmovies['movieId'] == temp, 'title'].item()) 
+        # top_movie_list.append(b['movieId'].temp)
     return top_movie_list
 
-recom_movies(10)
+recom_movies(n3)
