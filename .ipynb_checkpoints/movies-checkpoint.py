@@ -36,22 +36,27 @@ with st.expander("See the best movie ever"):
     
 name_list = movies['title'].tolist()
 m_name = st.selectbox('Please enter the name of a movie', name_list)
+
+n11 = st.text_input('Please enter the number of top rated movies that you would like to see') 
+if n11=="":
+    n11="1"
+
+def hit_movies(n):
+    movie_ratings = movies.merge(ratings, on = 'movieId', how = 'left')
+    sorted_movies = pd.DataFrame(movie_ratings.groupby('movieId').rating.mean().sort_values(ascending = False))
+    sorted_movies['number_of_ratings']=ratings.groupby('movieId').userId.count()
+    sorted_movies['rating_value'] = sorted_movies['rating'] * sorted_movies['number_of_ratings']
+    top_list = pd.DataFrame(sorted_movies['rating_value'].sort_values(ascending = False).reset_index())
+    top_movies = []
+    for movieId in top_list['movieId']:
+        top_movies.append(movies.loc[movies['movieId'] == movieId, 'title'].items())
+    top_movies = pd.DataFrame(top_movies)
+    return top_movies.head(n)
+hit_movies(int(n11))
+
 n1 = st.text_input('Please enter the number of top rated movies that you would like to see') 
 if n1=="":
     n1="1"
-
-#def hit_movies(n):
-#    movie_ratings = movies.merge(ratings, on = 'movieId', how = 'left')
-#    sorted_movies = pd.DataFrame(movie_ratings.groupby('movieId').rating.mean().sort_values(ascending = False))
-#    sorted_movies['number_of_ratings']=ratings.groupby('movieId').userId.count()
-#    sorted_movies['rating_value'] = sorted_movies['rating'] * sorted_movies['number_of_ratings']
-#    top_list = pd.DataFrame(sorted_movies['rating_value'].sort_values(ascending = False).reset_index())
-#    top_movies = []
-#    for movieId in top_list['movieId']:
-#        top_movies.append(movies.loc[movies['movieId'] == movieId, 'title'].items())
-#    top_movies = pd.DataFrame(top_movies)
-#    return top_movies.head(n)
-#hit_movies(int(n))
 
 name1 = movies.loc[movies['title']==m_name, 'movieId'].item()
 
