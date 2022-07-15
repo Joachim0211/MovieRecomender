@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
-import pickle
+import matplotlib as plt
+import seaborn as sns
 
 
 st.title("Movie Recommendation")
@@ -14,7 +15,7 @@ This is a protptype where users can see the top rated movies and movies that we 
 movies = pd.read_csv('movies.csv')
 ratings = pd.read_csv('ratings.csv')
 #tags = pd.read_csv('tags.csv')
-
+n1=1
 name_list = movies['title'].tolist()
 m_name = st.selectbox('Please enter the name of a movie', name_list)
 n1 = st.text_input('Please enter the number of top rated movies that you would like to see') 
@@ -47,7 +48,7 @@ def sim_movies(name, n):
     rating2['rating_count'] = ratings.groupby('movieId')['rating'].count()
     movie_corr_summary = corr_m_ID.join(rating2['rating_count'])
     movie_corr_summary.drop(m_ID, inplace=True) # drop the selected movie
-    topn = movie_corr_summary[movie_corr_summary['rating_count']>=10].sort_values('PearsonR',      ascending=False).head(n)
+    topn = movie_corr_summary[movie_corr_summary['rating_count']>=10].sort_values('PearsonR', ascending=False).head(n)
     m_name = movies[['movieId', 'title', 'genres']]
     topn = topn.merge(m_name, left_index=True, right_on="movieId")
     st.write(topn[['title', 'genres', 'rating_count']])

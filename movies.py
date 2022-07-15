@@ -15,7 +15,7 @@ This is a protptype where users can see the top rated movies and movies that we 
 movies = pd.read_csv('movies.csv')
 ratings = pd.read_csv('ratings.csv')
 #tags = pd.read_csv('tags.csv')
-
+n1=1
 name_list = movies['title'].tolist()
 m_name = st.selectbox('Please enter the name of a movie', name_list)
 n1 = st.text_input('Please enter the number of top rated movies that you would like to see') 
