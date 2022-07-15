@@ -12,6 +12,11 @@ This is a protptype where users can see the top rated movies and movies that we 
  
 """)
 
+if st.button('Go to Model Evaluation', on_click="https://www.google.de/?hl=de"):
+     st.write('Why hello there')
+else:
+     st.write('Goodbye')
+
 movies = pd.read_csv('movies.csv')
 ratings = pd.read_csv('ratings.csv')
 #tags = pd.read_csv('tags.csv')
