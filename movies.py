@@ -12,7 +12,9 @@ This is a protptype where users can see the top rated movies and movies that we 
  
 """)
 
-link = '[Google](https://www.google.de/?hl=de)'
+
+
+link = '[Evaluation](https://www.google.de/?hl=de)'
 
 
 if st.button('Go to Model Evaluation'):
@@ -24,6 +26,13 @@ movies = pd.read_csv('movies.csv')
 ratings = pd.read_csv('ratings.csv')
 #tags = pd.read_csv('tags.csv')
 
+with st.expander("See explanation"):
+    st.write("""
+         The Movie below is the favourite 
+         movie of most celebrities
+     """)
+    st.image("https://berlin.museum-digital.de/singleimage.php?imagenr=1850")
+    
 name_list = movies['title'].tolist()
 m_name = st.selectbox('Please enter the name of a movie', name_list)
 n1 = st.text_input('Please enter the number of top rated movies that you would like to see') 
