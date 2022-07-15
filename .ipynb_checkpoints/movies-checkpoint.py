@@ -3,7 +3,8 @@ import pandas as pd
 import matplotlib as plt
 import seaborn as sns
 from sklearn.metrics.pairwise import cosine_similarity
-
+movies = pd.read_csv('movies.csv')
+ratings = pd.read_csv('ratings.csv')
 
 st.title("Movie Recommendation")
  
@@ -13,19 +14,11 @@ This is a protptype where users can see the top rated movies and movies that we 
  
 """)
 
-
-
 link = '[Evaluation](https://www.google.de/?hl=de)'
-
-
 if st.button('Go to Model Evaluation'):
      st.markdown(link, unsafe_allow_html=True)
 else:
      st.write('No such Website')
-
-movies = pd.read_csv('movies.csv')
-ratings = pd.read_csv('ratings.csv')
-#tags = pd.read_csv('tags.csv')
 
 with st.expander("See the best movie ever"):
     st.write("""
@@ -35,7 +28,6 @@ with st.expander("See the best movie ever"):
     st.image("https://berlin.museum-digital.de/singleimage.php?imagenr=1850")
     
 name_list = movies['title'].tolist()
-m_name = st.selectbox('Please enter the name of a movie', name_list)
 
 n11 = st.text_input('Please enter the number of top rated movies that you would like to see') 
 if n11=="":
@@ -58,6 +50,8 @@ n1 = st.text_input('Please enter the number of top rated movies that you would l
 if n1=="":
     n1="1"
 
+
+m_name = st.selectbox('Please enter the name of a movie', name_list)
 name1 = movies.loc[movies['title']==m_name, 'movieId'].item()
 
 def sim_movies(name, n):
