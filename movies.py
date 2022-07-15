@@ -75,26 +75,24 @@ def sim_movies(name, n):
 st.write('Movies you might like')
 sim_movies(name1, int(n1))
 
-n2 = st.text_input('Please a user Id!')
-if n2=="":
-    n2="1"
-n3 = st.text_input('How many movies do you want to watch?')
+
+n3 = st.text_input('Whats hot at the moment - put in a number')
 if n3=="":
     n3="1"
-def movie_recom(user_id, n):
-    movie_titles = movies[['movieId', 'title']]
-    users_items = pd.pivot_table(data=ratings, 
-                                 values='rating', 
-                                 index='userId', 
-                                 columns='movieId')
-    users_items.fillna(0, inplace=True)
-    user_similarities = pd.DataFrame(cosine_similarity(users_items),
-                                 columns=users_items.index, 
-                                 index=users_items.index)
-    weights = (user_similarities.query("userId!=@user_id")[user_id] / sum(user_similarities.query("userId!=@user_id")[user_id]))
-    not_visited_restaurants = users_items.loc[users_items.index!=user_id, users_items.loc[user_id,:]==0]
-    weighted_averages = pd.DataFrame(not_visited_restaurants.T.dot(weights), columns=["predicted_rating"])
-    recommendations = weighted_averages.merge(movie_titles, left_index=True, right_on="movieId")
-    return recommendations.sort_values("predicted_rating", ascending=False).head(n)['title'].to_list()
+def recom_movies(n):
+    rating = pd.DataFrame(dfratings.groupby('movieId')['rating'].mean())
+    rating['movieId'] = rating.index
+    rating['rating_count'] = dfratings.groupby('movieId')['rating'].count()
+    rating['hrating'] = rating['rating'] * (rating['rating_count']/100)
+    rated = rating.sort_values(by='hrating', ascending=False)
+    for i in range(n):
+        temp = rated.iloc[i]['movieId']
+        print(temp)
+        dfmovies.loc[dfmovies['movieId'] == temp, 'title']
+        # temp1 = rating.loc[rating['movieId'] == temp, 'rating_count']>3.5
+        # print(temp1)
+        #top_movie_list.append(dfmovies.loc[dfmovies['movieId'] == temp, 'title'].item()) 
+        top_movie_list.append(b['movieId'].temp)
+    return top_movie_list
 
-movie_recom(n2, n3)
+recom_movies(10)
